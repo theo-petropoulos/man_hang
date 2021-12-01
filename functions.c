@@ -88,3 +88,40 @@ void print_add_menu_success(char *platform){
 		|                         |\n\
 		x+++++++++++++++++++++++++x\n");
 }
+
+/*
+* Code by "chux" https://stackoverflow.com/questions/28574983/fgets-limiting-input-length
+*/
+int ConsumeExtra(const char *buf, int8_t *i8_i) {
+  int found = 0;
+  *i8_i = 1;
+  if (strchr(buf, '\n') == NULL) {
+    int ch;
+    // dispose of extra data
+    while ( (ch = fgetc(stdin)) != '\n' && ch != EOF )
+	{
+      found = 1;
+    }
+  }
+  return found;
+}
+
+int add_new_word(char *s_word, FILE *f_file){
+	char 	c_find_index = strlen(s_word) + '0';
+	char 	c_read_index = '\0';
+
+	printf("FIND => %c\n", c_find_index);
+	while ( !feof(f_file) )
+	{
+        fscanf(f_file, "%c", &c_read_index);
+
+		printf("FOUND => %c\n", c_read_index);
+
+        if ( c_read_index == c_find_index )
+		{
+			printf(" HERE HERE HERE ");
+            fprintf(f_file, "\n%s", s_word);
+        }
+    }
+	return 0;
+}

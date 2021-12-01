@@ -14,6 +14,12 @@ int main ( int argc, char *argv[] )
 	// Open text file
 	FILE 	*words = fopen("assets/words.txt", "r+");
 
+	if ( !words )
+	{
+		printf("Une erreur est survenue pendant l'ouverture ou la lecture du fichier.\n");
+		return 0;
+	}
+
 	while ( c_main_menu_input != '3' )
 	{
 		// Print menu screen
@@ -49,18 +55,22 @@ int main ( int argc, char *argv[] )
 							c_words_menu_input = '\0';
 							{
 								char 	s_new_word[10] = {0}, c_new_letter = '\0';
+								int8_t 	i8_init = 0;
 								print_add_menu(PLATFORM_NAME);
 
 								while ( c_new_letter == '\0' )
 								{
+									// Prompt user and continue while word's length < 4 && > 9
 									do
 									{
-										// Get user's input as new word
+										// Get user's input
 										fgets(s_new_word, 10, stdin);
-
-										printf("new or fail\n");
-									} while ( !strchr(s_new_word, '\n') && s_new_word[10] != '\0' && s_new_word[9] != '\n' );
-
+										// Show error on attempt
+										if ( i8_init != 0 )
+										{
+											print_add_menu_error_length(PLATFORM_NAME);
+										}
+									} while ( ConsumeExtra(s_new_word, &i8_init) || ( (int)strlen(s_new_word) < 5 && s_new_word[0] != '3' ) );
 
 									// Remove line feed from user's input
 									while ( s_new_word[strlen(s_new_word) - 1] == '\n' )
@@ -85,7 +95,7 @@ int main ( int argc, char *argv[] )
 												i8_i = (int8_t)strlen(s_new_word);
 											}
 										}
-										// Else break the while loop
+										// Else break the loop
 										else
 										{
 											c_new_letter = s_new_word[i8_i];
@@ -96,6 +106,7 @@ int main ( int argc, char *argv[] )
 									if ( c_new_letter != '\0' && c_new_letter != 'X' )
 									{
 										print_add_menu_success(PLATFORM_NAME);
+										add_new_word(s_new_word, words);
 										c_new_letter = '\0';
 									}
 								}
