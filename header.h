@@ -1,4 +1,6 @@
-#include "functions.c"
+#include "core/functions/prints.c"
+#include "core/functions/actions.c"
+#include "core/menus.c"
 
 #if defined(_WIN32)
     #define PLATFORM_NAME "windows" // Windows

@@ -2,8 +2,12 @@
 #include <errno.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdio_ext.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+
+#include <sys/types.h>
 
 #include "header.h"
 
@@ -12,9 +16,9 @@ int main ( int argc, char *argv[] )
 	// Init menus inputs
 	char 	c_main_menu_input = '\0', c_words_menu_input = '\0';
 	// Open text file
-	FILE 	*words = fopen("assets/words.txt", "r+");
+	FILE 	*f_words = fopen("assets/words.txt", "r+");
 
-	if ( !words )
+	if ( !f_words )
 	{
 		printf("Une erreur est survenue pendant l'ouverture ou la lecture du fichier.\n");
 		return 0;
@@ -54,68 +58,16 @@ int main ( int argc, char *argv[] )
 							// Reset words menu input
 							c_words_menu_input = '\0';
 							{
-								char 	s_new_word[10] = {0}, c_new_letter = '\0';
-								int8_t 	i8_init = 0;
-								print_add_menu(PLATFORM_NAME);
-
-								while ( c_new_letter == '\0' )
-								{
-									// Prompt user and continue while word's length < 4 && > 9
-									do
-									{
-										// Get user's input
-										fgets(s_new_word, 10, stdin);
-										// Show error on attempt
-										if ( i8_init != 0 )
-										{
-											print_add_menu_error_length(PLATFORM_NAME);
-										}
-									} while ( ConsumeExtra(s_new_word, &i8_init) || ( (int)strlen(s_new_word) < 5 && s_new_word[0] != '3' ) );
-
-									// Remove line feed from user's input
-									while ( s_new_word[strlen(s_new_word) - 1] == '\n' )
-										s_new_word[strlen(s_new_word) - 1] = '\0';
-
-									// Parse the word and check if every character is alphabetical
-									for ( int8_t i8_i = 0; i8_i < (int8_t)strlen(s_new_word); i8_i++ )
-									{
-										// If a character isn't a letter
-										if ( !isalpha(s_new_word[i8_i]) )
-										{
-											// If the character is 3 ( return input )
-											if ( s_new_word[i8_i] == '3' )
-											{
-												c_main_menu_input = '1';
-												c_new_letter = 'X';
-											}
-											// Else show error
-											else{
-												print_add_menu_error_chars(PLATFORM_NAME);
-												c_new_letter = '\0';
-												i8_i = (int8_t)strlen(s_new_word);
-											}
-										}
-										// Else break the loop
-										else
-										{
-											c_new_letter = s_new_word[i8_i];
-										}
-									}
-
-									// Insert the new word inside the words list
-									if ( c_new_letter != '\0' && c_new_letter != 'X' )
-									{
-										print_add_menu_success(PLATFORM_NAME);
-										add_new_word(s_new_word, words);
-										c_new_letter = '\0';
-									}
-								}
-								break;
+								menu_add_word(PLATFORM_NAME, f_words, &c_main_menu_input);
 							}
+							break;
 
 						// Delete a word
 						case '2':
-							printf("THERE TWO\n");
+							c_words_menu_input = '\0';
+							{
+								menu_del_word(PLATFORM_NAME, f_words, &c_main_menu_input);
+							}
 							break;
 						case '3':
 							printf("THERE THREE\n");
@@ -132,7 +84,7 @@ int main ( int argc, char *argv[] )
 				break;
 			case '3':
 				clear_screen(PLATFORM_NAME);
-				fclose(words);
+				fclose(f_words);
 				return 0;
 				break;
 			default:
@@ -143,6 +95,6 @@ int main ( int argc, char *argv[] )
 		printf("main menu => %c -- word menu => %c\n", c_main_menu_input, c_words_menu_input);
 	}
 
-	fclose(words);
+	fclose(f_words);
 	return 0;
 }
