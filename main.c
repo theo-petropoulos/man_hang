@@ -5,6 +5,7 @@
 #include <stdio_ext.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <unistd.h>
 
 #include <sys/types.h>
@@ -13,8 +14,9 @@
 
 int main ( int argc, char *argv[] )
 {
+	srand(time(NULL)); 
 	// Init menus inputs
-	char 	c_main_menu_input = '\0', c_words_menu_input = '\0';
+	char 	c_main_menu_input = '\0', c_words_menu_input = '\0', c_play_menu_input = '\0';
 	// Open text file
 	FILE 	*f_words = fopen("assets/words.txt", "r+");
 
@@ -70,17 +72,37 @@ int main ( int argc, char *argv[] )
 							}
 							break;
 						case '3':
-							printf("THERE THREE\n");
 							break;
 						default:
-							printf("THERE DEFAULT");
 							while ( ( c_words_menu_input = getchar() ) == '\n');
 							break;
 					}
 				}
 				break;
 			case '2':
-				printf("MAIN TWO\n");
+				// Reset main menu input
+				c_main_menu_input = '\0';
+
+				while ( c_play_menu_input != 3 )
+				{
+					// Refresh screen
+					if( c_play_menu_input == '\0')
+						print_play_menu(PLATFORM_NAME);
+
+					// Remove line feed from input
+					while ( ( c_play_menu_input = getchar() ) == '\n');
+
+					c_play_menu_input = c_play_menu_input - '0';
+
+					if( c_play_menu_input >= 4 && c_play_menu_input <= 9)
+					{
+						menu_play_game(PLATFORM_NAME, f_words, c_play_menu_input);
+					}
+					else
+					{
+						print_menu_error_digits(PLATFORM_NAME);
+					}
+				}
 				break;
 			case '3':
 				clear_screen(PLATFORM_NAME);
@@ -88,7 +110,6 @@ int main ( int argc, char *argv[] )
 				return 0;
 				break;
 			default:
-				printf("MAIN DEFAULT %d\n", c_main_menu_input);
 				while ( ( c_main_menu_input = getchar() ) == '\n');
 				break;
 		}

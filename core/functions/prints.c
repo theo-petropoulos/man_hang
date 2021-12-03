@@ -89,6 +89,20 @@ void print_menu_error_length(char *platform){
 		x+++++++++++++++++++++++++x\n");
 }
 
+void print_menu_error_digits(char *platform){
+	clear_screen(platform);
+	printf("\
+		x+++++++++++++++++++++++++x\n\
+		|                         |\n\
+		|          ERREUR         |\n\
+		|   Le niveau saisi est   |\n\
+		|         invalide        |\n\
+		|                         |\n\
+		|  3 - Retour             |\n\
+		|                         |\n\
+		x+++++++++++++++++++++++++x\n");
+}
+
 void print_add_menu_success(char *platform){
 	clear_screen(platform);
 	printf("\
@@ -111,6 +125,20 @@ void print_del_menu_success(char *platform){
 		|          SUCCES         |\n\
 		|    Le mot a bien été    |\n\
 		|         supprimé        |\n\
+		|                         |\n\
+		|  3 - Retour             |\n\
+		|                         |\n\
+		x+++++++++++++++++++++++++x\n");
+}
+
+void print_play_menu(char *platform){
+	clear_screen(platform);
+	printf("\
+		x+++++++++++++++++++++++++x\n\
+		|                         |\n\
+		|          JOUER          |\n\
+		| Saisissez la difficulté |\n\
+		|     de 4 à 9 lettres    |\n\
 		|                         |\n\
 		|  3 - Retour             |\n\
 		|                         |\n\
