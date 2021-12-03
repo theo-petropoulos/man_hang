@@ -12,9 +12,9 @@
 
 #include "header.h"
 
-int main ( int argc, char *argv[] )
+int main ( )
 {
-	srand(time(NULL)); 
+	srand(time(NULL));
 	// Init menus inputs
 	char 	c_main_menu_input = '\0', c_words_menu_input = '\0', c_play_menu_input = '\0';
 	// Open text file

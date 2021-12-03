@@ -144,3 +144,62 @@ void print_play_menu(char *platform){
 		|                         |\n\
 		x+++++++++++++++++++++++++x\n");
 }
+
+void print_play_game(char *platform, char c_one, char c_two, char c_three, char c_four, char c_five, char c_six, char c_seven, char *s_blind_word, char *s_guessed_letters){
+	clear_screen(platform);
+	printf("\
+		.-=======================-.\n\
+		|X|          %c          |X|\n\
+		| |         %c%c%c         | |\n\
+		| |          %c          | |\n\
+		| |         %c %c         | |\n\
+		| |                     | |\n\
+		| |  Entrez une lettre  | |\n\
+		| |     3 - Retour      | |\n\
+		x+++++++++++++++++++++++++x\n\n\
+		DEVINEZ : %s\n\
+		HISTORIQUE : %s\n", c_one, c_two, c_three, c_four, c_five, c_six, c_seven, s_blind_word, s_guessed_letters);
+}
+
+void print_play_char(char *platform){
+	clear_screen(platform);
+	printf("\
+		x+++++++++++++++++++++++++x\n\
+		|                         |\n\
+		|          ERREUR         |\n\
+		|   Le caractère saisit   |\n\
+		|   n'est pas une lettre  |\n\
+		|                         |\n\
+		|  3 - Retour             |\n\
+		|                         |\n\
+		x+++++++++++++++++++++++++x\n");
+}
+
+void print_play_defeat(char *platform, char *word){
+	clear_screen(platform);
+	printf("\
+		x+++++++++++++++++++++++++x\n\
+		|                         |\n\
+		|         DEFAITE         |\n\
+		|  Vous n'avez pas réussi |\n\
+		|     à trouver le mot    |\n\
+		|  [4-9] - Réessayer      |\n\
+		|      3 - Retour         |\n\
+		|                         |\n\
+		x+++++++++++++++++++++++++x\n\n\
+		Le mot était : %s\n", word);
+}
+
+void print_play_victory(char *platform){
+	clear_screen(platform);
+	printf("\
+		x+++++++++++++++++++++++++x\n\
+		|                         |\n\
+		|         VICTOIRE        |\n\
+		|   Vous avez réussi à    |\n\
+		|      trouver le mot     |\n\
+		|  [4-9] - Réessayer      |\n\
+		|      3 - Retour         |\n\
+		|                         |\n\
+		x+++++++++++++++++++++++++x\n");
+}

@@ -116,10 +116,10 @@ void menu_del_word(char *platform, FILE *f_file, char *c_main_menu_input){
 	}
 }
 
-void menu_play_game(char *platform, FILE *f_file, int i8_level){
-	int8_t 	i8_t = i8_level;
-	char 	*play_word = malloc(i8_level * sizeof(char));
+void menu_play_game(char *platform, FILE *f_file, int c_play_menu_input){
+	int8_t 	i8_t = c_play_menu_input;
+	char 	*play_word = malloc(i8_t * sizeof(char));
 	play_word = get_random_word(f_file, i8_t);
-	printf("WORD GET => %s\n", play_word);
-	// free(play_word);
+	play_game(platform, play_word, i8_t);
+	free(play_word);
 }

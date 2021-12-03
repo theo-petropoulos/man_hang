@@ -169,3 +169,83 @@ char * get_random_word(FILE *f_file, int8_t i8_level){
 
 	return play_word;
 }
+
+int is_in_word(char c_guess, char *word, char *s_blind_word)
+{
+	int8_t i8_i = 0, i8_found = 0;
+	while(word[i8_i])
+	{
+		if(word[i8_i] == c_guess)
+		{
+			s_blind_word[i8_i] = c_guess;
+			i8_found = 1;
+		}
+		i8_i++;
+	}
+	return i8_found;
+}
+
+void play_game(char *platform, char *word, int8_t i8_level)
+{
+	int8_t 	i8_i = 0, i8_counter = 0, i8_wrong_guesses = 0;
+	char 	c_one = ' ', c_two = ' ', c_three = ' ', c_four = ' ', c_five = ' ', c_six = ' ', c_seven = ' ';
+	char 	c_guess = '\0';
+	char 	*s_blind_word = malloc(i8_level * sizeof(char));
+	char 	*s_guessed_letters = (char *)malloc(i8_counter * sizeof(char));
+
+	while(s_blind_word[i8_i])
+	{
+		s_blind_word[i8_i] = '-';
+		s_guessed_letters[i8_i] = ' ';
+		i8_i++;
+	}
+
+	print_play_game(platform, c_one, c_two, c_three, c_four, c_five, c_six, c_seven, s_blind_word, s_guessed_letters);
+
+	do
+	{
+		while ( ( c_guess = getchar() ) == '\n');
+
+		if(isalpha(c_guess))
+		{
+			s_guessed_letters[i8_counter] = c_guess;
+			i8_counter++;
+			s_guessed_letters = (char *)realloc(s_guessed_letters, i8_counter * sizeof(char));
+			if(!is_in_word(c_guess, word, s_blind_word))
+			{
+				i8_wrong_guesses++;
+				if ( c_one == ' ' ) c_one = '|';
+				else if ( c_three == ' ' ) c_three = 'o';
+				else if ( c_two == ' ' ) c_two = '_';
+				else if ( c_four == ' ' ) c_four = '_';
+				else if ( c_five == ' ' ) c_five = '|';
+				else if ( c_six == ' ' ) c_six = '/';
+				else if ( c_seven == ' ' ) c_seven = '\\';
+			}
+			print_play_game(platform, c_one, c_two, c_three, c_four, c_five, c_six, c_seven, s_blind_word, s_guessed_letters);
+		}
+		else
+			print_play_char(platform);
+		if ( c_guess == 3)
+		{
+			free(s_blind_word);
+			free(s_guessed_letters);
+			break;
+		}
+		else if ( strcmp(word, s_blind_word) == 0 )
+		{
+			print_play_victory(platform);
+			free(s_blind_word);
+			free(s_guessed_letters);
+			break;
+		}
+		else if ( i8_wrong_guesses >= 7 )
+		{
+			print_play_defeat(platform, word);
+			free(s_blind_word);
+			free(s_guessed_letters);
+			break;
+		}
+	} while ( c_guess != '3' || strcmp(word, s_blind_word) == 0 || i8_counter >= i8_level );
+
+}
