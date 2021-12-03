@@ -151,8 +151,7 @@ char * get_random_word(FILE *f_file, int8_t i8_level){
 					i8_i++;
 				}
 				fscanf(f_file, "%c", &c_read_index);
-				if ( !isdigit(c_read_index) )
-					i32_i++;
+				i32_i++;
 			}
 		}
 	}
@@ -193,9 +192,9 @@ void play_game(char *platform, char *word, int8_t i8_level)
 	char 	*s_blind_word = malloc(i8_level * sizeof(char));
 	char 	*s_guessed_letters = (char *)malloc(i8_counter * sizeof(char));
 
-	while(s_blind_word[i8_i])
+	while(word[i8_i] != '\0')
 	{
-		s_blind_word[i8_i] = '-';
+		s_blind_word[i8_i] = '?';
 		s_guessed_letters[i8_i] = ' ';
 		i8_i++;
 	}
@@ -223,6 +222,7 @@ void play_game(char *platform, char *word, int8_t i8_level)
 				else if ( c_seven == ' ' ) c_seven = '\\';
 			}
 			print_play_game(platform, c_one, c_two, c_three, c_four, c_five, c_six, c_seven, s_blind_word, s_guessed_letters);
+			printf("%s - %s - %d", word, s_blind_word, strcmp(word, s_blind_word));
 		}
 		else
 			print_play_char(platform);
