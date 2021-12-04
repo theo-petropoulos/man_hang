@@ -186,24 +186,16 @@ int is_in_word(char c_guess, char *word, char *s_blind_word)
 
 void play_game(char *platform, char *word, int8_t i8_level)
 {
-	int8_t 	i8_i = 0, i8_counter = 0, i8_wrong_guesses = 0;
+	int8_t 	i8_counter = 0, i8_wrong_guesses = 0;
 	char 	c_one = ' ', c_two = ' ', c_three = ' ', c_four = ' ', c_five = ' ', c_six = ' ', c_seven = ' ';
 	char 	c_guess = '\0';
 	char 	s_blind_word[i8_level];
-	memset(s_blind_word, '?', i8_level * sizeof(char));
+	memset(s_blind_word, '?', sizeof(s_blind_word));
 	char 	s_guessed_letters[i8_level + 7];
-	memset(s_guessed_letters, 0, (i8_level + 7) * sizeof(char));
+	memset(s_guessed_letters, ' ', sizeof(s_guessed_letters));
 
-	// for ( ; i8_i < i8_level; i8_i++ )
-	// 	s_blind_word[i8_i] = '?';
-
-	i8_i = 0;
-
-	while ( s_guessed_letters[i8_i] )
-	{
-		s_guessed_letters[i8_i] = ' ';
-		i8_i++;
-	}
+	s_blind_word[strlen(s_blind_word)] = '\0';
+	s_guessed_letters[strlen(s_guessed_letters)] = '\0';
 
 	print_play_game(platform, c_one, c_two, c_three, c_four, c_five, c_six, c_seven, s_blind_word, s_guessed_letters);
 
