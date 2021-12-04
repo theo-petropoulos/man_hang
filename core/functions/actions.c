@@ -139,7 +139,7 @@ char * get_random_word(FILE *f_file, int8_t i8_level){
 			fscanf(f_file, "%c", &c_read_index);
 
 			// Process words while the next index isn't reached
-			while ( c_read_index != c_end_index )
+			while ( c_read_index != c_end_index && !feof(f_file) )
 			{
 				int8_t i8_i = 0;
 				pp_words_array = (char **) realloc(pp_words_array, (i32_i + 1) * sizeof(*pp_words_array));
@@ -165,7 +165,7 @@ char * get_random_word(FILE *f_file, int8_t i8_level){
 			free(pp_words_array[i8_j]);
 	}
 	free(pp_words_array);
-
+	rewind(f_file);
 	return play_word;
 }
 
@@ -189,12 +189,18 @@ void play_game(char *platform, char *word, int8_t i8_level)
 	int8_t 	i8_i = 0, i8_counter = 0, i8_wrong_guesses = 0;
 	char 	c_one = ' ', c_two = ' ', c_three = ' ', c_four = ' ', c_five = ' ', c_six = ' ', c_seven = ' ';
 	char 	c_guess = '\0';
-	char 	*s_blind_word = malloc(i8_level * sizeof(char));
-	char 	*s_guessed_letters = (char *)malloc(i8_counter * sizeof(char));
+	char 	s_blind_word[i8_level];
+	memset(s_blind_word, '?', i8_level * sizeof(char));
+	char 	s_guessed_letters[i8_level + 7];
+	memset(s_guessed_letters, 0, (i8_level + 7) * sizeof(char));
 
-	while(word[i8_i] != '\0')
+	// for ( ; i8_i < i8_level; i8_i++ )
+	// 	s_blind_word[i8_i] = '?';
+
+	i8_i = 0;
+
+	while ( s_guessed_letters[i8_i] )
 	{
-		s_blind_word[i8_i] = '?';
 		s_guessed_letters[i8_i] = ' ';
 		i8_i++;
 	}
@@ -205,11 +211,11 @@ void play_game(char *platform, char *word, int8_t i8_level)
 	{
 		while ( ( c_guess = getchar() ) == '\n');
 
-		if(isalpha(c_guess))
+		if ( isalpha ( c_guess ) )
 		{
 			s_guessed_letters[i8_counter] = c_guess;
 			i8_counter++;
-			s_guessed_letters = (char *)realloc(s_guessed_letters, i8_counter * sizeof(char));
+			// s_guessed_letters = (char *)realloc(s_guessed_letters, i8_counter * sizeof(char));
 			if(!is_in_word(c_guess, word, s_blind_word))
 			{
 				i8_wrong_guesses++;
@@ -222,28 +228,27 @@ void play_game(char *platform, char *word, int8_t i8_level)
 				else if ( c_seven == ' ' ) c_seven = '\\';
 			}
 			print_play_game(platform, c_one, c_two, c_three, c_four, c_five, c_six, c_seven, s_blind_word, s_guessed_letters);
-			printf("%s - %s - %d", word, s_blind_word, strcmp(word, s_blind_word));
 		}
 		else
 			print_play_char(platform);
 		if ( c_guess == 3)
 		{
-			free(s_blind_word);
-			free(s_guessed_letters);
+			// free(s_blind_word);
+			// free(s_guessed_letters);
 			break;
 		}
 		else if ( strcmp(word, s_blind_word) == 0 )
 		{
 			print_play_victory(platform);
-			free(s_blind_word);
-			free(s_guessed_letters);
+			// free(s_blind_word);
+			// free(s_guessed_letters);
 			break;
 		}
 		else if ( i8_wrong_guesses >= 7 )
 		{
 			print_play_defeat(platform, word);
-			free(s_blind_word);
-			free(s_guessed_letters);
+			// free(s_blind_word);
+			// free(s_guessed_letters);
 			break;
 		}
 	} while ( c_guess != '3' || strcmp(word, s_blind_word) == 0 || i8_counter >= i8_level );

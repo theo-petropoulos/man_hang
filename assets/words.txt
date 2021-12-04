@@ -1,6 +1,11 @@
 4
-popo
+onze
+lice
+vive
+quoi
+lire
 5
+douze
 livre
 livre
 piece
@@ -9,6 +14,8 @@ pitre
 dicte
 piece
 6
+poisse
+passer
 lettre
 douche
 tourte
@@ -17,10 +24,14 @@ mortes
 toasts
 prompt
 7
+plisser
 chambre
 cuisine
 8
+moelleux
 plombier
 9
+bifurquer
+strategie
+fioriture
 boulanger
-baignoire

@@ -33,6 +33,7 @@ int main ( )
 
 		// Reset words menu input
 		c_words_menu_input = '\0';
+		c_play_menu_input = '\0';
 
 		// Remove line feed from input
 		while ( ( c_main_menu_input = getchar() ) == '\n');
@@ -96,10 +97,7 @@ int main ( )
 
 					if( c_play_menu_input >= 4 && c_play_menu_input <= 9)
 					{
-						printf("HERE\n");
 						menu_play_game(PLATFORM_NAME, f_words, c_play_menu_input);
-						printf("END GAME\n");
-
 					}
 					else
 					{
