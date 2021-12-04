@@ -4,7 +4,7 @@ OUT-MAIN = main.o
 FLAGS = -Wall -Wextra
 EXEC = man_hang
 METHOD-OUT = gcc $(OUT-MAIN) -o $(EXEC)
-METHOD-SRC-MAIN = gcc -c $(SRC-MAIN-ARG) $(FLAGS) -o $(OUT-MAIN)
+METHOD-SRC-MAIN = gcc -c -g $(SRC-MAIN-ARG) $(FLAGS) -o $(OUT-MAIN)
 
 $(EXEC): $(OUT-MAIN)
 	$(METHOD-OUT)
