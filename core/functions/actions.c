@@ -233,24 +233,20 @@ void play_game(char *platform, char *word, int8_t i8_level)
 			print_play_char(platform);
 		if ( c_guess == 3)
 		{
-			free(s_blind_word);
-			free(s_guessed_letters);
 			break;
 		}
 		else if ( strcmp(word, s_blind_word) == 0 )
 		{
 			print_play_victory(platform);
-			free(s_blind_word);
-			free(s_guessed_letters);
 			break;
 		}
 		else if ( i8_wrong_guesses >= 7 )
 		{
 			print_play_defeat(platform, word);
-			free(s_blind_word);
-			free(s_guessed_letters);
 			break;
 		}
 	} while ( c_guess != '3' || strcmp(word, s_blind_word) == 0 || i8_counter >= i8_level );
 
+	free(s_blind_word);
+	free(s_guessed_letters);
 }

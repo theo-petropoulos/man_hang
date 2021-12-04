@@ -117,9 +117,10 @@ void menu_del_word(char *platform, FILE *f_file, char *c_main_menu_input){
 }
 
 void menu_play_game(char *platform, FILE *f_file, int c_play_menu_input){
-	int8_t 	i8_t = c_play_menu_input;
-	char 	*play_word = malloc(i8_t * sizeof(char));
-	play_word = get_random_word(f_file, i8_t);
-	play_game(platform, play_word, i8_t);
+	int8_t 	i8_level = c_play_menu_input;
+	char 	*play_word;
+	play_word = (char *)malloc((i8_level + 1) * sizeof(char));
+	strcpy(play_word, get_random_word(f_file, i8_level));
+	play_game(platform, play_word, i8_level);
 	free(play_word);
 }

@@ -198,7 +198,7 @@ void print_play_victory(char *platform){
 		|         VICTOIRE        |\n\
 		|   Vous avez réussi à    |\n\
 		|      trouver le mot     |\n\
-		|  [4-9] - Réessayer      |\n\
+		|  [4-9] - Rejouer        |\n\
 		|      3 - Retour         |\n\
 		|                         |\n\
 		x+++++++++++++++++++++++++x\n");
