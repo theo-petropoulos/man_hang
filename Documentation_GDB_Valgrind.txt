@@ -1,0 +1,20 @@
+GDB pour GNU Project Debugger, et Valgrind sont des outils permettant d'analyser le fonctionnement d'un programme et d'en afficher les éventuelles erreurs de fonctionnement.
+GDB permet par exemple de mettre en évidence l'endroit exact ayant forcé le programme à se terminer anormalement, ou encore permet d'afficher les variables à des moments précis de l'exécution.
+Valgrind est généralement utilisé pour son module Memcheck qui permet entre autres d'analyser les fuites mémoires, ou l'utilisation de variables non initialisées.
+
+Pour pouvoir utiliser GDB et pouvoir afficher les lignes sous Valgrind, il faudra compiler le programme avec le flag -g.
+GDB et Valgrind s'utilisent sommairement avec la commande gdb <nom_du_programme> / valgrind <nom_du_programme>.
+Sous GDB, pour lancer le programme, il suffit d'utiliser la commande run avec éventuellement des arguments, par exemple : run admin root 76.
+Il est possible d'ajouter des breakpoints afin d'arrêter temporairement l'exécution du programme à des moments précis afin d'analyser le fonctionnement de celui-ici. La commande à utiliser est
+break <nom_du_fichier>:<ligne/fonction> par exemple break main.c:48. La commande continue / c permet de continuer jusqu'au prochain breakpoint, ou next permet d'exécuter le code ligne par ligne.
+Il est également possible de spécifier des breaks conditionnels, par exemple break 72 if <condition>.
+Pour afficher la valeur d'une variable, il faudra utiliser la commande print, par exemple print game_status.
+
+Sous Valgrind, la commande valgrind <nom_du_programme> <args_optionnels> permettra d'afficher les erreurs mais n'en affichera généralement ni la source, ni les fuites mémoires.
+Pour la mémoire, il faudra utiliser le flag --leak-check=full par exemple valgrind --leak-check=full <nom_du_programme>. Pour le détail des fuites, il faudra utiliser le flag --show-leak-kinds=all.
+Le flag --track-origins=yes va permettre de détecter l'utilisation de variables non initialisées.
+Enfin le flag --verbose ou -v permettra d'afficher plus de détails de manière générale sur les problèmes rencontrés, et le flag --log-file=output.txt permettra d'enregister les logs.
+Exemple de commande : valgrind --leak-check=full --track-origin=yes --verbose --log-file=log_error.txt monprogramme admin root 76.
+
+J'ai principalement utilisé Valgrind pour cet exercice qui m'a permis de corriger de nombreuses erreurs mémoire notamment l'initialisation dynamique de mots sans y inclure le caractère de terminaison '\0'.
+J'ai aussi pu utiliser gdb pour analyser la valeur d'une variable de menu à un instant donné puisque mon programme fonctionne en menu puis sous-menu avec possibilité de revenir au menu principal.
