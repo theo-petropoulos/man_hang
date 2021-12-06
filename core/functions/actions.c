@@ -118,12 +118,11 @@ void delete_word(char *s_word, FILE *f_file){
 	free(s_file_content);
 }
 
-char * get_random_word(FILE *f_file, int8_t i8_level){
+void get_random_word(FILE *f_file, int8_t i8_level, char **play_word){
 	int32_t	i32_i = 0;
 	char 	c_find_index = i8_level + '0';
 	char 	c_end_index = ( i8_level + 1 ) + '0';
 	char 	c_read_index = '\0';
-	char 	*play_word = {0};
 	char 	**pp_words_array = 0;
 
 	while ( !feof(f_file) )
@@ -157,17 +156,17 @@ char * get_random_word(FILE *f_file, int8_t i8_level){
 		}
 	}
 
+	rewind(f_file);
+
 	int32_t 	i32_rand = rand() % i32_i;
-	play_word = pp_words_array[i32_rand];
+	*play_word = strdup(pp_words_array[i32_rand]);
 
 	for(int8_t i8_j = 0; i8_j < i32_i; i8_j++)
 	{
-		if(i8_j != i32_rand)
+		// if(i8_j != i32_rand)
 			free(pp_words_array[i8_j]);
 	}
 	free(pp_words_array);
-	rewind(f_file);
-	return play_word;
 }
 
 int is_in_word(char c_guess, char *word, char *s_blind_word)
