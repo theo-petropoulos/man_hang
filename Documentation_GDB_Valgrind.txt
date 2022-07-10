@@ -14,7 +14,7 @@ Sous Valgrind, la commande valgrind <nom_du_programme> <args_optionnels> permett
 Pour la mémoire, il faudra utiliser le flag --leak-check=full par exemple valgrind --leak-check=full <nom_du_programme>. Pour le détail des fuites, il faudra utiliser le flag --show-leak-kinds=all.
 Le flag --track-origins=yes va permettre de détecter l'utilisation de variables non initialisées.
 Enfin le flag --verbose ou -v permettra d'afficher plus de détails de manière générale sur les problèmes rencontrés, et le flag --log-file=output.txt permettra d'enregister les logs.
-Exemple de commande : valgrind --leak-check=full --track-origin=yes --verbose --log-file=log_error.txt monprogramme admin root 76.
+Exemple de commande : valgrind --leak-check=full --track-origins=yes --verbose --log-file=log_error.txt monprogramme admin root 76.
 
 J'ai principalement utilisé Valgrind pour cet exercice qui m'a permis de corriger de nombreuses erreurs mémoire notamment l'initialisation dynamique de mots sans y inclure le caractère de terminaison '\0'.
 J'ai aussi pu utiliser gdb pour analyser la valeur d'une variable de menu à un instant donné puisque mon programme fonctionne en menu puis sous-menu avec possibilité de revenir au menu principal.
